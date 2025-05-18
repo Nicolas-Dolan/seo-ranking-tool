@@ -21,4 +21,5 @@
   - graphs?
 - alt search engines
 - variable search parameters?
+- search history
 - deploy to GH pages
