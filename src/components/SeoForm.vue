@@ -9,11 +9,11 @@
       </div>
       <div>
         <FloatLabel variant="on">
-          <InputText name="searchURL" id="searchURL" type="text" fluid />
-          <label for="searchURL">Search URL</label>
+          <InputText name="rankedURL" id="rankedURL" type="text" fluid />
+          <label for="rankedURL">Ranked URL</label>
         </FloatLabel>
-        <Message v-if="$form.searchURL?.invalid" severity="error" size="small" variant="simple">{{
-          $form.searchURL.error.message
+        <Message v-if="$form.rankedURL?.invalid" severity="error" size="small" variant="simple">{{
+          $form.rankedURL.error.message
         }}</Message>
       </div>
       <div>
@@ -67,6 +67,7 @@ import FloatLabel from 'primevue/floatlabel'
 import Panel from 'primevue/panel'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 import { z } from 'zod'
+import { useMockApi } from '@/composables/mockApi'
 
 const searchEngines: SearchEngine[] = ['Google', 'Bing', 'Yahoo', 'DuckDuckGo']
 const textSuggestions = [
@@ -78,7 +79,7 @@ const textSuggestions = [
 
 const initialValues = ref({
   searchEngine: searchEngines[0],
-  searchURL: 'https://www.infotrack.co.uk',
+  rankedURL: 'https://www.infotrack.co.uk',
   searchTerms: 'land registry searches',
   resultsAmount: 100,
 })
@@ -88,7 +89,7 @@ const resolver = zodResolver(
     searchEngine: z.enum(searchEngines, {
       errorMap: () => ({ message: 'A search engine is required' }),
     }),
-    searchURL: z.string().min(1, { message: 'Search URL is required' }).refine(validateURL, {
+    rankedURL: z.string().min(1, { message: 'Ranked URL is required' }).refine(validateURL, {
       message: 'URL must be a valid format: eg, https://www.example.co.uk',
     }),
     searchTerms: z.string().min(1, { message: 'Search terms are required' }),
@@ -98,10 +99,11 @@ const resolver = zodResolver(
       .max(1000, { message: 'Results amount cannot be more than 1000' }),
   }),
 )
+const { getCurrentURLMatches } = useMockApi()
 
-const onFormSubmit = ({ valid }) => {
+const onFormSubmit = ({ valid, values }) => {
   if (valid) {
-    // submit the form
+    getCurrentURLMatches(values)
   }
 }
 </script>
