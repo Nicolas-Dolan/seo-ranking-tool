@@ -145,5 +145,6 @@ const clearFilters = () => {
 .buttons-container {
   display: flex;
   gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 </style>
