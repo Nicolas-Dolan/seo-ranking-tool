@@ -115,6 +115,7 @@ import { useSearchHistory } from '@/stores/searchHistory'
 import { FilterMatchMode } from '@primevue/core/api'
 import type { SearchEngine } from '@/utils/types'
 import { convertTimestampToDate } from '@/utils/methods'
+import type { DataTableSortEvent } from 'primevue/datatable'
 
 const { searchHistory, clearSearchHistory } = useSearchHistory()
 const filters = ref({
@@ -129,8 +130,8 @@ const displaySearchResults = (searchResults: number[]) => {
   return searchResults.length > 0 ? searchResults.join(', ') : 'No results found'
 }
 
-const customSortResults = (event) => {
-  return event.searchResults?.[0] ?? 1001
+const customSortResults = (event: DataTableSortEvent) => {
+  return (event.searchResults as number[])?.[0] ?? 1001
 }
 
 const clearFilters = () => {

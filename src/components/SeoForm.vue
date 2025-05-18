@@ -77,6 +77,7 @@ import Panel from 'primevue/panel'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 import { z } from 'zod'
 import { useMockApi } from '@/composables/mockApi'
+import type { FormSubmitEvent } from '@primevue/forms'
 
 const searchEngines: SearchEngine[] = ['Google', 'Bing', 'Yahoo', 'DuckDuckGo']
 const textSuggestions = ['land registry searches', 'property searches', 'conveyancing software']
@@ -105,7 +106,7 @@ const resolver = zodResolver(
 )
 const { getCurrentURLMatches } = useMockApi()
 
-const onFormSubmit = ({ valid, values }) => {
+const onFormSubmit = ({ valid, values }: FormSubmitEvent<typeof initialValues.value>) => {
   if (valid) {
     getCurrentURLMatches(values)
   }
