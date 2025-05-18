@@ -1,11 +1,14 @@
 import { ref } from 'vue'
-import type { RequestParams } from '@/utils/types'
+import type { SearchParams } from '@/utils/types'
+import { useSearchHistory } from '@/stores/searchHistory'
 
 const searchResults = ref<number[]>([])
-const currentRankedURL = ref('')
-const currentSearchTerms = ref('')
-const currentSearchEngine = ref('')
-const currentResultsAmount = ref(0)
+const currentParams = ref<SearchParams>({
+  rankedURL: '',
+  searchTerms: '',
+  searchEngine: 'Google',
+  resultsAmount: 0,
+})
 const isLoading = ref(false)
 const hasSearched = ref(false)
 
@@ -27,22 +30,34 @@ const generateRandomIntegers = (n: number) => {
 }
 
 export const useMockApi = () => {
+  const { addToSearchHistory } = useSearchHistory()
   const getCurrentURLMatches = ({
     rankedURL,
     searchTerms,
     searchEngine,
     resultsAmount,
-  }: RequestParams) => {
+  }: SearchParams) => {
     isLoading.value = true
     hasSearched.value = true
-    currentRankedURL.value = rankedURL
-    currentSearchTerms.value = searchTerms
-    currentSearchEngine.value = searchEngine
-    currentResultsAmount.value = resultsAmount
+    currentParams.value = {
+      rankedURL,
+      searchTerms,
+      searchEngine,
+      resultsAmount,
+    }
     const matches = generateRandomIntegers(resultsAmount)
     return new Promise((resolve) => {
       setTimeout(() => {
         searchResults.value = matches
+        addToSearchHistory({
+          id: crypto.randomUUID(),
+          timestamp: Date.now(),
+          rankedURL,
+          searchTerms,
+          searchEngine,
+          resultsAmount,
+          searchResults: matches,
+        })
         isLoading.value = false
         resolve({ data: { matches } })
       }, 500)
@@ -54,9 +69,6 @@ export const useMockApi = () => {
     searchResults,
     isLoading,
     hasSearched,
-    currentRankedURL,
-    currentSearchTerms,
-    currentSearchEngine,
-    currentResultsAmount,
+    currentParams,
   }
 }

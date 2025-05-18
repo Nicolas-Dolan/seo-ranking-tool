@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SeoForm from './components/SeoForm.vue'
 import ResultsPanel from './components/ResultsPanel.vue'
+import SearchHistoryTable from './components/SearchHistoryTable.vue'
 </script>
 
 <template>
@@ -8,5 +9,6 @@ import ResultsPanel from './components/ResultsPanel.vue'
     <h1>SEO Keyword Ranking Tool</h1>
     <SeoForm />
     <ResultsPanel />
+    <SearchHistoryTable />
   </div>
 </template>

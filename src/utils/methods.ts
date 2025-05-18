@@ -3,3 +3,8 @@ export const validateURL = (url: string) => {
     url,
   )
 }
+
+export function convertTimestampToDate(timestamp: number) {
+  const date = new Date(timestamp)
+  return date.toLocaleString() // or use toISOString(), toDateString(), etc.
+}

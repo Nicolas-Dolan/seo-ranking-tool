@@ -3,8 +3,9 @@
     <div v-if="!hasSearched">Click submit to see results</div>
     <div v-else>
       <h3>
-        Showing rankings of <strong>{{ currentRankedURL }}</strong> when searching the keywords
-        <strong>"{{ currentSearchTerms }}"</strong> on <strong>{{ currentSearchEngine }}</strong>
+        Showing rankings of <strong>{{ currentParams.rankedURL }}</strong> when searching the
+        keywords <strong>"{{ currentParams.searchTerms }}"</strong> on
+        <strong>{{ currentParams.searchEngine }}</strong>
       </h3>
       <div v-if="!searchResults.length">
         {{ noMatchesMessage }}
@@ -27,18 +28,11 @@ import { useMockApi } from '@/composables/mockApi'
 import Panel from 'primevue/panel'
 import Tag from 'primevue/tag'
 
-const {
-  searchResults,
-  hasSearched,
-  isLoading,
-  currentRankedURL,
-  currentSearchTerms,
-  currentSearchEngine,
-  currentResultsAmount,
-} = useMockApi()
+const { searchResults, hasSearched, isLoading, currentParams } = useMockApi()
 
 const noMatchesMessage = computed(() => {
-  return `No matches found in the first ${currentResultsAmount.value === 1 ? 'result' : currentResultsAmount.value + ' results'}`
+  const { resultsAmount } = currentParams.value
+  return `No matches found in the first ${resultsAmount === 1 ? 'result' : resultsAmount + ' results'}`
 })
 
 const getResultSeverity = (result: number) => {
