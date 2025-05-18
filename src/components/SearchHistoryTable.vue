@@ -1,5 +1,7 @@
 <template>
   <Panel header="Search History">
+    <Button severity="secondary" label="Clear search history" @click="clearSearchHistory" />
+    <Button severity="secondary" label="Clear filters" @click="clearFilters" />
     <DataTable
       v-model:filters="filters"
       :value="searchHistory"
@@ -93,13 +95,14 @@ import Panel from 'primevue/panel'
 import DataTable from 'primevue/datatable'
 import InputText from 'primevue/inputtext'
 import MultiSelect from 'primevue/multiselect'
+import Button from 'primevue/button'
 import Column from 'primevue/column'
 import { useSearchHistory } from '@/stores/searchHistory'
 import { FilterMatchMode } from '@primevue/core/api'
 import type { SearchEngine } from '@/utils/types'
 import { convertTimestampToDate } from '@/utils/methods'
 
-const { searchHistory } = useSearchHistory()
+const { searchHistory, clearSearchHistory } = useSearchHistory()
 const filters = ref({
   searchTerms: { value: null, matchMode: FilterMatchMode.CONTAINS },
   rankedURL: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -114,6 +117,12 @@ const displaySearchResults = (searchResults: number[]) => {
 
 const customSortResults = (event) => {
   return event.searchResults?.[0] ?? 1001
+}
+
+const clearFilters = () => {
+  filters.value.searchTerms.value = null
+  filters.value.rankedURL.value = null
+  filters.value.searchEngine.value = null
 }
 </script>
 

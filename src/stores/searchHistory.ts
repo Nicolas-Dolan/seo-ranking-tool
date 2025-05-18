@@ -9,5 +9,9 @@ export const useSearchHistory = defineStore('searchHistory', () => {
     searchHistory.value.push(item)
   }
 
-  return { searchHistory, addToSearchHistory }
+  function clearSearchHistory() {
+    searchHistory.value.splice(0, searchHistory.value.length)
+  }
+
+  return { searchHistory, addToSearchHistory, clearSearchHistory }
 })
