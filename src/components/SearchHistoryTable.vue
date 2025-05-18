@@ -14,6 +14,7 @@
       dataKey="id"
       tableStyle="min-width: 50rem"
     >
+      <template #empty> No results found</template>
       <Column
         field="searchResults"
         header="Ranking"

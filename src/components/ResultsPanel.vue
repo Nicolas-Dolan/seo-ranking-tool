@@ -1,6 +1,10 @@
 <template>
   <Panel header="Rankings">
     <div v-if="!hasSearched">Click submit to see results</div>
+    <div v-else-if="isLoading">
+      <Skeleton></Skeleton>
+      <Skeleton v-for="i in 4" :key="i" width="5rem"></Skeleton>
+    </div>
     <div v-else>
       <h3>
         Showing rankings of <strong>{{ currentParams.rankedURL }}</strong> when searching the
@@ -27,6 +31,7 @@ import { ref, computed } from 'vue'
 import { useMockApi } from '@/composables/mockApi'
 import Panel from 'primevue/panel'
 import Tag from 'primevue/tag'
+import Skeleton from 'primevue/skeleton'
 
 const { searchResults, hasSearched, isLoading, currentParams } = useMockApi()
 
