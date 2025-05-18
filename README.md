@@ -1,45 +1,44 @@
-# seo-ranking-tool
+# SEO Keyword Ranking Tool
 
-This template should help get you started developing with Vue 3 in Vite.
+This is the UI for a tool that ranks a given URL for keyword searches across several search engines.
 
-## Recommended IDE Setup
+It is deployed at: https://nicolas-dolan.github.io/seo-ranking-tool/
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Type Support for `.vue` Imports in TS
+- Specify search terms, search engine, the URL to be ranked, and how many results to consider
+- Mocks the api: auto-generates a random set of rankings within the requested results range
+- Saves a history of search results to local storage, which can be retrieved after the session ends
+- Sortable and filterable table displaying previous search results with pagination
+- Dark mode
+- Responsive design
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Technologies Used
 
-## Customize configuration
+- Vue 3 composition api
+- TypeScript
+- Pinia
+- PrimeVue
+- VueUse
+- zod
+- scss/sass
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Local Project Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Go to: http://localhost:5173
 
-```sh
-npm run build
-```
+## Screenshots
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+![Form input and results output](src/assets/images/ranking-tool.png)
 
-```sh
-npm run test:unit
-```
+![Search history table](src/assets/images/ranking-table.png)
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+![Dark mode](src/assets/images/dark-mode.png)
