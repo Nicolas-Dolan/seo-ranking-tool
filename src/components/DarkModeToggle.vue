@@ -1,9 +1,12 @@
 <template>
-  <Button
-    :label="isDark ? 'Dark' : 'Light'"
-    :icon="isDark ? 'pi pi-moon' : 'pi pi-sun'"
-    @click="toggleDarkMode()"
-  />
+  <div v-tooltip="'Toggle Dark Mode'">
+    <Button
+      :icon="isDark ? 'pi pi-moon' : 'pi pi-sun'"
+      @click="toggleDarkMode()"
+      rounded
+      aria-label="Toggle Dark Mode"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -1,28 +1,23 @@
 @import './base.css';
 @import 'primeicons/primeicons.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+body {
+  background-color: var(--surface-ground);
+  color: var(--text-primary);
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+:not(.dark) body {
+  background-color: #f8f9fa;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+h1 {
+  font-size: clamp(1.5rem, calc(2vw + 1rem), 2.5rem);
+  font-family: var(--font-family);
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+:not(.dark) h1 {
+  color: #334155;
+}
+.dark h1 {
+  color: var(--text-primary);
 }

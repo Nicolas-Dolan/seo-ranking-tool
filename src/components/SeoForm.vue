@@ -1,13 +1,30 @@
 <template>
   <Panel header="Select your search options">
-    <Form v-slot="$form" :initialValues :resolver @submit="onFormSubmit">
-      <div>
-        <FloatLabel variant="on">
-          <Select name="searchEngine" id="searchEngine" :options="searchEngines" fluid />
-          <label for="searchEngine">Search engine</label>
-        </FloatLabel>
+    <Form v-slot="$form" :initialValues :resolver @submit="onFormSubmit" class="form">
+      <div class="form__row form-group">
+        <div class="form-group__item">
+          <FloatLabel variant="on">
+            <Select name="searchEngine" id="searchEngine" :options="searchEngines" fluid />
+            <label for="searchEngine">Search engine</label>
+          </FloatLabel>
+        </div>
+
+        <div class="form-group__item">
+          <FloatLabel variant="on">
+            <InputNumber name="resultsAmount" id="resultsAmount" :min="1" :max="1000" fluid />
+            <label for="resultsAmount">Results to consider</label>
+          </FloatLabel>
+          <Message
+            v-if="$form.resultsAmount?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+            >{{ $form.resultsAmount.error?.message }}</Message
+          >
+        </div>
       </div>
-      <div>
+
+      <div class="form__row">
         <FloatLabel variant="on">
           <InputText name="rankedURL" id="rankedURL" type="text" fluid />
           <label for="rankedURL">Ranked URL</label>
@@ -16,7 +33,8 @@
           $form.rankedURL.error.message
         }}</Message>
       </div>
-      <div>
+
+      <div class="form__row">
         <FloatLabel variant="on">
           <InputText name="searchTerms" id="searchTerms" type="text" fluid />
           <label for="searchTerms">Search terms</label>
@@ -24,37 +42,28 @@
         <Message v-if="$form.searchTerms?.invalid" severity="error" size="small" variant="simple">{{
           $form.searchTerms.error.message
         }}</Message>
-        <div>
+
+        <div class="text-suggestions">
           <Button
             v-for="suggestion in textSuggestions"
             @click="$form.searchTerms.value = suggestion"
             :key="suggestion"
             :label="suggestion"
             severity="secondary"
-            variant="text"
+            size="small"
           />
         </div>
       </div>
-      <div>
-        <FloatLabel variant="on">
-          <InputNumber name="resultsAmount" id="resultsAmount" fluid />
-          <label for="resultsAmount">Number of results to consider</label>
-        </FloatLabel>
-        <Message
-          v-if="$form.resultsAmount?.invalid"
-          severity="error"
-          size="small"
-          variant="simple"
-          >{{ $form.resultsAmount.error?.message }}</Message
-        >
+
+      <div class="form__actions">
+        <Button type="submit" label="Submit" />
       </div>
-      <Button type="submit" severity="secondary" label="Submit" />
     </Form>
   </Panel>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import type { SearchEngine } from '@/utils/types'
 import { validateURL } from '@/utils/methods'
 import { Form } from '@primevue/forms'
@@ -70,12 +79,7 @@ import { z } from 'zod'
 import { useMockApi } from '@/composables/mockApi'
 
 const searchEngines: SearchEngine[] = ['Google', 'Bing', 'Yahoo', 'DuckDuckGo']
-const textSuggestions = [
-  'land registry searches',
-  'property searches',
-  'conveyancing solutions',
-  'conveyancing software',
-]
+const textSuggestions = ['land registry searches', 'property searches', 'conveyancing software']
 
 const initialValues = ref({
   searchEngine: searchEngines[0],
@@ -107,3 +111,38 @@ const onFormSubmit = ({ valid, values }) => {
   }
 }
 </script>
+<style scoped lang="scss">
+.form {
+  &__row {
+    margin-bottom: 1rem;
+  }
+  .form-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+
+    &__item {
+      flex: 1;
+    }
+  }
+  .text-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+}
+</style>
+
+<style lang="scss">
+.form {
+  .p-inputtext {
+    height: 42px;
+  }
+}
+</style>

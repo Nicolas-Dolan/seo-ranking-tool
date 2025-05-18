@@ -1,7 +1,20 @@
 <template>
   <Panel header="Search History">
-    <Button severity="secondary" label="Clear search history" @click="clearSearchHistory" />
-    <Button severity="secondary" label="Clear filters" @click="clearFilters" />
+    <div class="buttons-container">
+      <Button
+        severity="secondary"
+        label="Clear search history"
+        size="small"
+        @click="clearSearchHistory"
+      />
+      <Button
+        severity="secondary"
+        label="Clear filters"
+        size="small"
+        icon="pi pi-filter-slash"
+        @click="clearFilters"
+      />
+    </div>
     <DataTable
       v-model:filters="filters"
       :value="searchHistory"
@@ -127,4 +140,9 @@ const clearFilters = () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+}
+</style>

@@ -7,10 +7,30 @@ import DarkModeToggle from './components/DarkModeToggle.vue'
 
 <template>
   <div class="wrapper">
-    <DarkModeToggle />
-    <h1>SEO Keyword Ranking Tool</h1>
+    <header>
+      <h1>SEO Keyword Ranking Tool</h1>
+      <DarkModeToggle />
+    </header>
     <SeoForm />
     <ResultsPanel />
     <SearchHistoryTable />
   </div>
 </template>
+
+<style scoped lang="scss">
+.wrapper {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: min(2rem, 4%);
+  padding-top: 1rem;
+  max-width: 60rem;
+  margin: auto;
+}
+</style>

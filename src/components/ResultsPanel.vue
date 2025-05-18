@@ -2,19 +2,22 @@
   <Panel header="Rankings">
     <div v-if="!hasSearched">Click submit to see results</div>
     <div v-else-if="isLoading">
-      <Skeleton></Skeleton>
-      <Skeleton v-for="i in 4" :key="i" width="5rem"></Skeleton>
+      <Skeleton class="skeleton-description"></Skeleton>
+      <div class="skeleton-container">
+        <Skeleton v-for="i in 4" :key="i" width="33px" height="31px"></Skeleton>
+      </div>
     </div>
     <div v-else>
-      <h3>
-        Showing rankings of <strong>{{ currentParams.rankedURL }}</strong> when searching the
-        keywords <strong>"{{ currentParams.searchTerms }}"</strong> on
-        <strong>{{ currentParams.searchEngine }}</strong>
-      </h3>
+      <p class="results-description">
+        Showing rankings of <span class="highlighted-text">{{ currentParams.rankedURL }}</span> when
+        searching the keywords
+        <span class="highlighted-text">"{{ currentParams.searchTerms }}"</span> on
+        <span class="highlighted-text">{{ currentParams.searchEngine }}</span>
+      </p>
       <div v-if="!searchResults.length">
         {{ noMatchesMessage }}
       </div>
-      <div v-else>
+      <div v-else class="results-container">
         <Tag
           v-for="result in searchResults"
           :key="result"
@@ -27,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useMockApi } from '@/composables/mockApi'
 import Panel from 'primevue/panel'
 import Tag from 'primevue/tag'
@@ -47,4 +50,19 @@ const getResultSeverity = (result: number) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.results-description,
+.skeleton-description {
+  margin-bottom: 1rem;
+}
+.results-container,
+.skeleton-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.highlighted-text {
+  font-weight: bold;
+  color: var(--text-color);
+}
+</style>
