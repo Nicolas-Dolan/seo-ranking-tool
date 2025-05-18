@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import MyComp from './components/MyComp.vue'
+import SeoForm from './components/SeoForm.vue'
 </script>
 
 <template>
   <div class="wrapper">
-    <MyComp />
+    <SeoForm />
   </div>
 </template>
