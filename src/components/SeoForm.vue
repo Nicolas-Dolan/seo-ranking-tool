@@ -9,6 +9,15 @@
       </div>
       <div>
         <FloatLabel variant="on">
+          <InputText name="searchURL" id="searchURL" type="text" fluid />
+          <label for="searchURL">Search URL</label>
+        </FloatLabel>
+        <Message v-if="$form.searchURL?.invalid" severity="error" size="small" variant="simple">{{
+          $form.searchURL.error.message
+        }}</Message>
+      </div>
+      <div>
+        <FloatLabel variant="on">
           <InputText name="searchTerms" id="searchTerms" type="text" fluid />
           <label for="searchTerms">Search terms</label>
         </FloatLabel>
@@ -44,8 +53,10 @@
   </Panel>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
+import type { SearchEngine } from '@/utils/types'
+import { validateURL } from '@/utils/methods'
 import { Form } from '@primevue/forms'
 import Button from 'primevue/button'
 import Select from 'primevue/select'
@@ -57,7 +68,7 @@ import Panel from 'primevue/panel'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 import { z } from 'zod'
 
-const searchEngines = ['Google', 'Bing']
+const searchEngines: SearchEngine[] = ['Google', 'Bing', 'Yahoo', 'DuckDuckGo']
 const textSuggestions = [
   'land registry searches',
   'property searches',
@@ -67,6 +78,7 @@ const textSuggestions = [
 
 const initialValues = ref({
   searchEngine: searchEngines[0],
+  searchURL: 'https://www.infotrack.co.uk',
   searchTerms: 'land registry searches',
   resultsAmount: 100,
 })
@@ -75,6 +87,9 @@ const resolver = zodResolver(
   z.object({
     searchEngine: z.enum(searchEngines, {
       errorMap: () => ({ message: 'A search engine is required' }),
+    }),
+    searchURL: z.string().min(1, { message: 'Search URL is required' }).refine(validateURL, {
+      message: 'URL must be a valid format: eg, https://www.example.co.uk',
     }),
     searchTerms: z.string().min(1, { message: 'Search terms are required' }),
     resultsAmount: z
